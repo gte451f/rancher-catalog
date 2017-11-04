@@ -3,14 +3,11 @@ jenkins-primary:
   ports:
     - "${PORT}:8080"
   labels:
-    io.rancher.sidekicks: jenkins-plugins,jenkins-datavolume
+    io.rancher.sidekicks: jenkins-datavolume
     io.rancher.container.hostname_override: container_name
   volumes_from:
-    - jenkins-plugins
     - jenkins-datavolume
   entrypoint: /usr/share/jenkins/rancher/jenkins.sh
-jenkins-plugins:
-  image: rancher/jenkins-plugins:v0.1.1
 jenkins-datavolume:
   image: "busybox"
   volumes:
