@@ -5,18 +5,19 @@
     Jenkins Swarm Slave
   questions:
     - variable: jenkins_user
-      label: "Jenkins Host username"
+      label: "Jenkins Host Username"
       type: "string"
       required: false
       description: |
         Username to authenticate to a secured Jenkins host with
     - variable: jenkins_pass
-      label: "Jenkins password"
+      label: "Jenkins Password"
       type: "string"
       required: false
       description: |
         Password to authenticate to a secured Jenkins host with
     - variable: swarm_executors
+      label: "Swarm Executors"
       required: true
       type: "string"
       description: |

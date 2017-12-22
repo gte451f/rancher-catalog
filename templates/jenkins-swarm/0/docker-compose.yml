@@ -8,4 +8,4 @@ swarm-clients:
     JENKINS_USER: "${jenkins_user}"
     SWARM_EXECUTORS: "${swarm_executors}"
     JENKINS_HOST: "${jenkins_host}"
-    JENKINS_POST: "${jenkins_post}"
+    JENKINS_PORT: "${jenkins_port}"
