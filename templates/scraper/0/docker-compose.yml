@@ -1,6 +1,4 @@
 version: '2'
-volumes:
-  caddy: {}
 services:
   django: &django
     image: 'gte451f/scrape:latest'
@@ -39,6 +37,6 @@ services:
     ports:
       - ${public_port}:${public_port}
       - ${public_port_monitoring}:${public_port_monitoring}
-  volumes:
-    media_data:
-      driver: ${volume_driver}
+volumes:
+  media_data:
+    driver: ${volume_driver}
