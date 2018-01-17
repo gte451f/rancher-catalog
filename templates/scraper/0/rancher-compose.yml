@@ -1,0 +1,90 @@
+version: '2'
+catalog:
+  name: "SC Scraper"
+  version: "v0.1"
+  description: "Scraper tool"
+  uuid: Scraper-1
+  minimum_rancher_version: v0.51.0
+  questions:
+    - variable: public_port
+      description: "public port"
+      label: "Public Port"
+      required: true
+      default: "8585"
+      type: "int"
+    - variable: public_port_monitoring
+      description: "public port monitoring"
+      label: "Public Port Monitoring"
+      required: true
+      default: "8586"
+      type: "int"
+    - variable: url
+      description: "Url. eg: https://external.scraper.com:1234"
+      label: "Url"
+      required: true
+      default: "http://rancher3.imatters.us:9010"
+      type: "string"
+    - variable: mariadb_url
+      description: "MariaDB database url: mysql://root:root@192.168.1.92:23306/scraper"
+      label: "MariaDB Database Url"
+      required: true
+      default: ""
+      type: "string"
+    - variable: sentry_dsn
+      description: "Sentry DSN"
+      label: "Sentry DSN"
+      required: true
+      default: "https://7d94b4bd727a4ee1a21897d22b585ad0:c3e17f8d702c482185d857e1bd1d2e30@sentry.io/272592"
+      type: "string"
+    - variable: volume_driver
+      description: "Volume driver to use with this service"
+      label: "Volume driver"
+      required: true
+      default: "local"
+      type: enum
+      options:
+        - local
+        - rancher-nfs
+        - rancher-efs
+        - rancher-ebs
+services:
+  scraper-lb:
+    scale: 1
+    lb_config:
+      certs: []
+      port_rules:
+      - priority: 1
+        protocol: http
+        service: celeryflower
+        source_port: ${public_port_monitoring}
+        target_port: 5555
+      - priority: 2
+        protocol: http
+        service: django
+        source_port: ${public_port}
+        target_port: 5000
+    health_check:
+      response_timeout: 2000
+      healthy_threshold: 2
+      port: 42
+      unhealthy_threshold: 3
+  django:
+    scale: 1
+    retain_ip: true
+    environment:
+      - EXTERNAL_URL=${url}
+    health_check:
+      port: 5000
+      interval: 5000
+      unhealthy_threshold: 3
+      request_line: 'GET / HTTP/1.0'
+      healthy_threshold: 2
+      response_timeout: 5000
+  celerybeat:
+    scale: 1
+    environment:
+      - EXTERNAL_URL=${url}
+  celeryworker:
+    scale: 2
+    environment:
+      - EXTERNAL_URL=${url}

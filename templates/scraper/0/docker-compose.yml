@@ -1,0 +1,44 @@
+version: '2'
+volumes:
+  caddy: {}
+services:
+  django: &django
+    image: 'gte451f/scrape:latest'
+#    build:
+#      context: .
+#      dockerfile: ./compose/production/django/Dockerfile
+    depends_on:
+      - redis
+    ports:
+      - 5000
+    environment:
+      - DJANGO_SECRET_KEY=8123123j2k1h312kj3h21jk3h21
+      - DATABASE_URL=${mariadb_url}
+      - DJANGO_SENTRY_DSN=${sentry_dsn}
+      - DJANGO_SETTINGS_MODULE=config.settings.production
+      - DJANGO_SECURE_SSL_REDIRECT=False
+      - DJANGO_ALLOWED_HOSTS=0.0.0.0,scraper.djangocoders.com,rancher3.imatters.us,rancher4.imatters.us,rancher5.imatters.us,rancher6.imatters.us
+    command: /gunicorn.sh
+    volumes:
+      - 'media_data:/app/social_scraper/media'
+  redis:
+    image: redis:3.0
+  celeryworker:
+    <<: *django
+    command: /start-celeryworker.sh
+  celerybeat:
+    <<: *django
+    command: /start-celerybeat.sh
+  celeryflower:
+    <<: *django
+    ports:
+      - 5555
+    command: /start-celeryflower.sh
+  scraper-lb:
+    image: rancher/lb-service-haproxy:v0.7.9
+    ports:
+      - ${public_port}:${public_port}
+      - ${public_port_monitoring}:${public_port_monitoring}
+  volumes:
+    media_data:
+      driver: ${volume_driver}
