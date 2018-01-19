@@ -22,7 +22,7 @@ catalog:
       description: "Url. eg: https://external.scraper.com:1234"
       label: "Url"
       required: true
-      default: "http://rancher3.imatters.us:9010"
+      default: "http://rancher3.imatters.us:8585"
       type: "string"
     - variable: mariadb_url
       description: "MariaDB database url: mysql://root:root@192.168.1.92:23306/scraper"

@@ -2,9 +2,6 @@ version: '2'
 services:
   django: &django
     image: 'gte451f/scrape:latest'
-#    build:
-#      context: .
-#      dockerfile: ./compose/production/django/Dockerfile
     depends_on:
       - redis
     ports:
@@ -23,9 +20,11 @@ services:
     image: redis:3.0
   celeryworker:
     <<: *django
+    ports: []
     command: /start-celeryworker.sh
   celerybeat:
     <<: *django
+    ports: []
     command: /start-celerybeat.sh
   celeryflower:
     <<: *django
