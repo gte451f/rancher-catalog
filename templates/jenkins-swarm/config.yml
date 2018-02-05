@@ -1,5 +1,5 @@
 name: Jenkins Swarm
 description: |
   Jenkins Swarm Salve
-version: 3.7-rancher1
+version: 3.8-rancher1
 category: Continuous Integration
