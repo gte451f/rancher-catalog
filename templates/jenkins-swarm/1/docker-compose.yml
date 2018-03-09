@@ -9,3 +9,6 @@ swarm-clients:
     SWARM_EXECUTORS: "${swarm_executors}"
     JENKINS_HOST: "${jenkins_host}"
     JENKINS_PORT: "${jenkins_port}"
+  volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/jenkins_home/workspace:/var/jenkins_home/workspace
