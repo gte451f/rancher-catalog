@@ -12,3 +12,5 @@ swarm-clients:
   volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/jenkins_home/workspace:/var/jenkins_home/workspace
+      - /var/jenkins_workspaces:/var/jenkins_workspaces
+      - /opt/swarm:/opt/swarm
