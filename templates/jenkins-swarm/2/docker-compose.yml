@@ -1,0 +1,16 @@
+swarm-clients:
+  image: "gte451f/jenkins-swarm:3.9"
+  labels:
+    io.rancher.scheduler.affinity:host_label_soft: ci=worker
+    io.rancher.container.hostname_override: container_name
+  environment:
+    JENKINS_PASS: "${jenkins_pass}"
+    JENKINS_USER: "${jenkins_user}"
+    SWARM_EXECUTORS: "${swarm_executors}"
+    JENKINS_HOST: "${jenkins_host}"
+    JENKINS_PORT: "${jenkins_port}"
+  volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/jenkins_home/workspace:/var/jenkins_home/workspace
+      - /var/jenkins_workspaces:/var/jenkins_workspaces
+      - /opt/swarm:/opt/swarm

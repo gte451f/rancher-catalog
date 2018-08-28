@@ -1,0 +1,36 @@
+.catalog:
+  name: Jenkins Swarm
+  version: 3.9-rancher1
+  description: |
+    Jenkins Swarm Slave
+  questions:
+    - variable: jenkins_user
+      label: "Jenkins Host Username"
+      type: "string"
+      required: false
+      description: |
+        Username to authenticate to a secured Jenkins host with
+    - variable: jenkins_pass
+      label: "Jenkins Password"
+      type: "string"
+      required: false
+      description: |
+        Password to authenticate to a secured Jenkins host with
+    - variable: swarm_executors
+      label: "Swarm Executors"
+      required: true
+      type: "string"
+      description: |
+        Number of executors on the swarm. Default is #cpus
+    - variable: jenkins_host
+      label: "Jenkins Address"
+      type: "string"
+      required: true
+      description: |
+        FQDN where Master Jenkins server is running ie. http://10.1.0.1
+    - variable: jenkins_port
+      label: "Exposed Jenkins Port"
+      type: "string"
+      required: true
+      description: |
+        Host on which the Jenkins server is published
