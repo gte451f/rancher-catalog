@@ -1,5 +1,5 @@
 name: Jenkins
 description: |
   Jenkins CI server (LTS)
-version: 2.105.0-rancher1
+version: 2.140.0-rancher1
 category: Continuous Integration
