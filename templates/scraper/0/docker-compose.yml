@@ -1,7 +1,7 @@
 version: '2'
 services:
   django: &django
-    image: 'gte451f/scrape:latest'
+    image: 'mibrex/scrape:latest'
 #    build:
 #      context: .
 #      dockerfile: ./compose/production/django/Dockerfile
